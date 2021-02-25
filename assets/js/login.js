@@ -52,6 +52,7 @@ $(function () {
                 // 模拟人的点击行为
                 $('#link_login').click()
             }
+            
         }
         )
     })

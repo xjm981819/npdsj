@@ -1,9 +1,7 @@
 $(function () {
-    getUserInfo();
+    getUserInfo()
 
-
-
-    const layer = layui.layer
+    var layer = layui.layer
 
     // 点击按钮，实现退出功能
     $('#btnLogout').on('click', function () {
@@ -22,7 +20,7 @@ $(function () {
 })
 
 // 获取用户的基本信息
-function getUserInfo () {
+function getUserInfo() {
     $.ajax({
         method: 'GET',
         url: '/my/userinfo',
@@ -30,7 +28,7 @@ function getUserInfo () {
         // headers: {
         //     Authorization: localStorage.getItem('token') || ''
         // },
-        success (res) {
+        success: function (res) {
             if (res.status !== 0) {
                 return layui.layer.msg('获取用户信息失败！')
             }
@@ -39,21 +37,14 @@ function getUserInfo () {
             renderAvatar(res.data)
         },
         // 不论成功还是失败，最终都会调用 complete 回调函数
-        complete: function (res) {
-            // console.log('执行了 complete 回调：')
-            // console.log(res)
-            // 在 complete 回调函数中，可以使用 res.responseJSON 拿到服务器响应回来的数据
-            if (res.responseJSON.status === 1 && res.responseJSON.message === '身份认证失败！') {
-                // 1. 强制清空 token
-                localStorage.removeItem('token')
-                // 2. 强制跳转到登录页面
-                location.href = '/login.html'
-            }
-        }
+        
+
     })
+
+
 }
 
-function renderAvatar (user) {
+function renderAvatar(user) {
     const name = user.nickname || user.username
     $('#welcome').html(`欢迎${name}`)
     if (user.user_pic !== null) {
